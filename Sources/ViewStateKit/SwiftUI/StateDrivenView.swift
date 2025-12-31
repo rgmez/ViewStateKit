@@ -16,14 +16,14 @@ public struct StateDrivenView<
     LoadingView: View,
     IdleView: View
 >: View {
-
+    
     private let state: ViewState<Content>
     private let content: (Content) -> ContentView
     private let empty: (EmptyReason?) -> EmptyViewContent
     private let error: (ViewError) -> ErrorViewContent
     private let loading: () -> LoadingView
     private let idle: () -> IdleView
-
+    
     public init(
         state: ViewState<Content>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
@@ -47,19 +47,27 @@ public struct StateDrivenView<
         self.loading = loading
         self.idle = idle
     }
-
+    
     public var body: some View {
         switch state {
         case .idle:
             idle()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
         case .loading:
             loading()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
         case let .content(value):
             content(value)
+            
         case let .empty(reason):
             empty(reason)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
         case let .error(viewError):
             error(viewError)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
     }
 }
