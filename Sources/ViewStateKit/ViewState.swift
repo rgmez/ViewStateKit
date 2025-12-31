@@ -62,3 +62,6 @@ public enum EmptyReason: Equatable, Sendable {
     /// A custom, user-defined reason. Use this when none of the predefined cases match your scenario.
     case custom(String)
 }
+
+extension ViewState: Equatable where Content: Equatable {}
+extension ViewState: Sendable where Content: Sendable {}
