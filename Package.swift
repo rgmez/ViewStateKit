@@ -6,10 +6,10 @@ import PackageDescription
 let package = Package(
     name: "ViewStateKit",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12),
-        .tvOS(.v15),
-        .watchOS(.v8)
+        .iOS(.v17),
+        .macOS(.v14),
+        .tvOS(.v17),
+        .watchOS(.v10)
     ],
     products: [
         .library(name: "ViewStateKit", targets: ["ViewStateKit"])
