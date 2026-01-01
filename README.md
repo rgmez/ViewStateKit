@@ -50,7 +50,7 @@ ViewStateKit helps you replace multiple UI flags (`isLoading`, `hasError`, `isEm
 ### watchOS
 | Loading | Content | Empty | Error |
 | --- | --- | --- | --- |
-| <img src="README/Images/watchos-loading.png" width="140"> | <img src="README/Images/watchos-content.mov" width="140"> | <img src="README/Images/watchos-empty.mov" width="140"> | <img src="README/Images/watchos-error.mov" width="140"> |
+| <img src="README/Images/watchos-loading.png" width="140"> | <img src="README/Images/watchos-content.png" width="140"> | <img src="README/Images/watchos-empty.png" width="140"> | <img src="README/Images/watchos-error.png" width="140"> |
 
 ---
 
