@@ -9,21 +9,6 @@ import Foundation
 
 // MARK: - ViewState specializations
 
-/// A convenience alias for `ViewState` with explicit generic roles.
-///
-/// Use this when you want to express the full set of possible UI outcomes:
-/// - `Content`: the successful payload rendered by the UI.
-/// - `Failure`: the error payload shown when loading/processing fails.
-/// - `Empty`: the payload shown when loading succeeds but there is nothing to display.
-///
-/// This alias doesn’t change behavior—it's purely semantic, to improve readability at call sites.
-///
-/// Example:
-/// ```
-/// typealias UsersState = LoadableState<[User], ErrorDisplayModel, EmptyDisplayModel>
-/// ```
-public typealias LoadableState<Content, Failure, Empty> = ViewState<Content, Failure, Empty>
-
 /// A `ViewState` specialization for screens that cannot fail.
 ///
 /// This type encodes “no error state” at the type level by using `Never` as the failure type. In practice this means:
@@ -32,9 +17,9 @@ public typealias LoadableState<Content, Failure, Empty> = ViewState<Content, Fai
 ///
 /// Example:
 /// ```
-/// typealias SearchState = LoadableStateNeverFails<[User], EmptyDisplayModel>
+/// typealias SearchState = ViewStateWithoutError<[User], EmptyDisplayModel>
 /// ```
-public typealias LoadableStateNeverFails<Content, Empty> = ViewState<Content, Never, Empty>
+public typealias ViewStateWithoutError<Content, Empty> = ViewState<Content, Never, Empty>
 
 /// A `ViewState` specialization for screens that can never be empty.
 ///
@@ -44,6 +29,6 @@ public typealias LoadableStateNeverFails<Content, Empty> = ViewState<Content, Ne
 ///
 /// Example:
 /// ```
-/// typealias ProfileState = LoadableStateNeverEmpty<User, ErrorDisplayModel>
+/// typealias ProfileState = ViewStateWithoutEmpty<User, ErrorDisplayModel>
 /// ```
-public typealias LoadableStateNeverEmpty<Content, Failure> = ViewState<Content, Failure, Never>
+public typealias ViewStateWithoutEmpty<Content, Failure> = ViewState<Content, Failure, Never>
