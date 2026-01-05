@@ -10,8 +10,8 @@ import SwiftUI
 
 public struct StateDrivenView<
     Content,
-    ErrorState,
-    EmptyState,
+    Failure,
+    Empty,
     ContentView: View,
     EmptyViewContent: View,
     ErrorViewContent: View,
@@ -19,18 +19,18 @@ public struct StateDrivenView<
     IdleView: View
 >: View {
     
-    private let state: ViewState<Content, ErrorState, EmptyState>
+    private let state: ViewState<Content, Failure, Empty>
     private let content: (Content) -> ContentView
-    private let empty: (EmptyState) -> EmptyViewContent
-    private let error: (ErrorState) -> ErrorViewContent
+    private let empty: (Empty) -> EmptyViewContent
+    private let error: (Failure) -> ErrorViewContent
     private let loading: () -> LoadingView
     private let idle: () -> IdleView
     
     public init(
-        state: ViewState<Content, ErrorState, EmptyState>,
+        state: ViewState<Content, Failure, Empty>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
-        @ViewBuilder empty: @escaping (EmptyState) -> EmptyViewContent,
-        @ViewBuilder error: @escaping (ErrorState) -> ErrorViewContent,
+        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent,
+        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent,
         @ViewBuilder loading: @escaping () -> LoadingView = {
             ProgressView()
         },
@@ -59,12 +59,12 @@ public struct StateDrivenView<
         case let .content(value):
             content(value)
             
-        case let .empty(emptyState):
-            empty(emptyState)
+        case let .empty(value):
+            empty(value)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             
-        case let .error(errorState):
-            error(errorState)
+        case let .error(value):
+            error(value)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
     }
@@ -72,7 +72,7 @@ public struct StateDrivenView<
 
 // MARK: Convenience defaults for ViewState<Content, ViewError, EmptyReason>
 
-public extension StateDrivenView where ErrorState == ErrorDisplayModel, EmptyState == EmptyDisplayModel {
+public extension StateDrivenView where Failure == ErrorDisplayModel, Empty == EmptyDisplayModel {
     init(
         state: ViewState<Content, ErrorDisplayModel, EmptyDisplayModel>,
         @ViewBuilder content: @escaping (Content) -> ContentView,

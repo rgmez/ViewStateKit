@@ -1,0 +1,49 @@
+//
+//  ViewState+Typealiases.swift
+//  ViewStateKit
+//
+//  Created by Roberto Gómez on 5/1/26.
+//
+
+import Foundation
+
+// MARK: - ViewState specializations
+
+/// A convenience alias for `ViewState` with explicit generic roles.
+///
+/// Use this when you want to express the full set of possible UI outcomes:
+/// - `Content`: the successful payload rendered by the UI.
+/// - `Failure`: the error payload shown when loading/processing fails.
+/// - `Empty`: the payload shown when loading succeeds but there is nothing to display.
+///
+/// This alias doesn’t change behavior—it's purely semantic, to improve readability at call sites.
+///
+/// Example:
+/// ```
+/// typealias UsersState = LoadableState<[User], ErrorDisplayModel, EmptyDisplayModel>
+/// ```
+public typealias LoadableState<Content, Failure, Empty> = ViewState<Content, Failure, Empty>
+
+/// A `ViewState` specialization for screens that cannot fail.
+///
+/// This type encodes “no error state” at the type level by using `Never` as the failure type. In practice this means:
+/// - The `.error` case cannot be constructed in well-typed code.
+/// - Consumers can omit failure handling in many contexts (or treat it as unreachable).
+///
+/// Example:
+/// ```
+/// typealias SearchState = LoadableStateNeverFails<[User], EmptyDisplayModel>
+/// ```
+public typealias LoadableStateNeverFails<Content, Empty> = ViewState<Content, Never, Empty>
+
+/// A `ViewState` specialization for screens that can never be empty.
+///
+/// This type encodes “no empty state” at the type level by using `Never` as the empty type. In practice this means:
+/// - The `.empty` case cannot be constructed in well-typed code.
+/// - Screens using this state must either be `.content`, `.loading`, `.idle`, or `.error`.
+///
+/// Example:
+/// ```
+/// typealias ProfileState = LoadableStateNeverEmpty<User, ErrorDisplayModel>
+/// ```
+public typealias LoadableStateNeverEmpty<Content, Failure> = ViewState<Content, Failure, Never>

@@ -33,35 +33,35 @@ public extension ViewState {
         return nil
     }
     
-    var error: ErrorState? {
+    var error: Failure? {
         if case let .error(value) = self { return value }
         return nil
     }
     
-    var emptyState: EmptyState? {
+    var empty: Empty? {
         if case let .empty(value) = self { return value }
         return nil
     }
     
-    func map<NewContent>(_ transform: (Content) -> NewContent) -> ViewState<NewContent, ErrorState, EmptyState> {
+    func map<NewContent>(_ transform: (Content) -> NewContent) -> ViewState<NewContent, Failure, Empty> {
         return switch self {
         case .idle: .idle
         case .loading: .loading
         case let .content(content): .content(transform(content))
-        case let .empty(emptyState): .empty(emptyState)
-        case let .error(errorState): .error(errorState)
+        case let .empty(empty): .empty(empty)
+        case let .error(failure): .error(failure)
         }
     }
     
     func flatMap<NewContent>(
-        _ transform: (Content) -> ViewState<NewContent, ErrorState, EmptyState>
-    ) -> ViewState<NewContent, ErrorState, EmptyState> {
+        _ transform: (Content) -> ViewState<NewContent, Failure, Empty>
+    ) -> ViewState<NewContent, Failure, Empty> {
         return switch self {
         case .idle: .idle
         case .loading: .loading
         case let .content(content): transform(content)
-        case let .empty(emptyState): .empty(emptyState)
-        case let .error(errorState): .error(errorState)
+        case let .empty(empty): .empty(empty)
+        case let .error(failure): .error(failure)
         }
     }
 }

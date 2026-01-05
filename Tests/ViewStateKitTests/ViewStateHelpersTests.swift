@@ -81,6 +81,6 @@ struct ViewStateHelpersTests {
         (state: State.error(sampleError), expected: Optional<EmptyDisplayModel>.none),
     ])
     func emptyState_returnsExpected(state: State, expected: EmptyDisplayModel?) {
-        #expect(state.emptyState == expected)
+        #expect(state.empty == expected)
     }
 }

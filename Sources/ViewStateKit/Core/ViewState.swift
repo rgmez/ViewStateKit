@@ -13,7 +13,7 @@ import Foundation
 /// `isLoading`, `hasError`, or `isEmpty`.
 ///
 /// A screen should always be in exactly one state at a time.
-public enum ViewState<Content, ErrorState, EmptyState> {
+public enum ViewState<Content, Failure, Empty> {
     /// The initial, inactive state.
     ///
     /// Use this when the view has not started loading data yet. This is typically the state right after a view appears.
@@ -35,16 +35,16 @@ public enum ViewState<Content, ErrorState, EmptyState> {
     ///
     /// This state is different from `error`: it represents a valid outcome, such as an empty list, no search results, or data that has not been created yet.
     ///
-    /// - Parameter emptyState: A value describing why or how the content is empty.
-    case empty(EmptyState)
+    /// - Parameter empty: A value describing why or how the content is empty.
+    case empty(Empty)
     
     /// Indicates that an error occurred while loading or processing data.
     ///
     /// This state should be used when something went wrong and the user needs to be informed about the failure.
     ///
-    /// - Parameter errorState: A user-facing error value.
-    case error(ErrorState)
+    /// - Parameter failure: A user-facing error value.
+    case error(Failure)
 }
 
-extension ViewState: Equatable where Content: Equatable, ErrorState: Equatable, EmptyState: Equatable {}
-extension ViewState: Sendable where Content: Sendable, ErrorState: Sendable, EmptyState: Sendable {}
+extension ViewState: Equatable where Content: Equatable, Failure: Equatable, Empty: Equatable {}
+extension ViewState: Sendable where Content: Sendable, Failure: Sendable, Empty: Sendable {}
