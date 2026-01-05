@@ -10,12 +10,12 @@ import ViewStateKit
 
 struct LoadableContentView: View {
     @State private var viewModel = LoadableContentViewModel()
+    @State private var selectedOutcome: LoadOutcome = .success
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
                 controls
-                    .frame(maxWidth: .infinity, alignment: .top)
 
                 Divider()
 
@@ -29,26 +29,11 @@ struct LoadableContentView: View {
 
     private var controls: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Manual states")
-                .font(.headline)
-
-            HStack {
-                Button("Loading") { viewModel.update(state: .loading) }
-                Button("Content") { viewModel.update(state: .content(["Alpha", "Beta", "Gamma"])) }
-            }
-
-            HStack {
-                Button("Empty") { viewModel.update(state: .empty(.noResults)) }
-                Button("Error") { viewModel.update(state: .error(ViewError.generic())) }
-            }
-
-            Divider().padding(.vertical, 4)
-
             Text("Simulated load")
                 .font(.headline)
 
             HStack {
-                Picker("Outcome", selection: $viewModel.selectedOutcome) {
+                Picker("Outcome", selection: $selectedOutcome) {
                     ForEach(LoadOutcome.allCases) { outcome in
                         Text(outcome.displayTitle).tag(outcome)
                     }
@@ -56,7 +41,7 @@ struct LoadableContentView: View {
                 .pickerStyle(.segmented)
 
                 Button("Load") {
-                    Task { await viewModel.load() }
+                    Task { await viewModel.load(outcome: selectedOutcome) }
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -64,10 +49,13 @@ struct LoadableContentView: View {
     }
 
     private var contentArea: some View {
-        StateDrivenView(state: viewModel.state) { items in
-            List(items, id: \.self) { item in
-                Text(item)
-            }
-        }
+        StateDrivenView(
+            state: viewModel.state,
+            content: { items in
+                List(items, id: \.self) { Text($0) }
+            },
+            empty: { emptyPlaceholder($0) },
+            error: { errorPlaceholder($0) }
+        )
     }
 }

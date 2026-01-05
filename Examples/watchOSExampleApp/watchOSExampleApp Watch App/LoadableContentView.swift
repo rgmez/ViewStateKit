@@ -10,31 +10,35 @@ import ViewStateKit
 
 struct LoadableContentWatchView: View {
     @State private var viewModel = LoadableContentViewModel()
+    @State private var selectedOutcome: LoadOutcome = .success
     @State private var showsResult = false
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
                 Text("Outcome")
                     .font(.headline)
-
+                
                 HStack(spacing: 6) {
-                    Button("✅") { viewModel.selectedOutcome = .success }
-                    Button("📭") { viewModel.selectedOutcome = .empty }
-                    Button("⚠️") { viewModel.selectedOutcome = .failure }
+                    Button("✅") { selectedOutcome = .success }
+                    Button("📭") { selectedOutcome = .empty }
+                    Button("⚠️") { selectedOutcome = .failure }
                 }
                 .buttonStyle(.bordered)
-
+                
                 Button("Show result") {
                     showsResult = true
-                    Task { await viewModel.load() }   // 👈 carga antes de navegar
+                    Task { await viewModel.load(outcome: selectedOutcome) }
                 }
                 .buttonStyle(.borderedProminent)
-
-                Button("Reset") { viewModel.reset() }
-                    .buttonStyle(.bordered)
-
-                Text("Selected: \(viewModel.selectedOutcome.displayTitle)")
+                
+                Button("Reset") {
+                    viewModel.reset()
+                    selectedOutcome = .success
+                }
+                .buttonStyle(.bordered)
+                
+                Text("Selected: \(selectedOutcome.displayTitle)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

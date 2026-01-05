@@ -9,8 +9,8 @@ import Foundation
 
 /// A user-facing error representation.
 ///
-/// `ViewError` is meant to describe errors in a way that is suitable for presentation in the UI, rather than for debugging or logging.
-public struct ViewError: Error, Equatable, Sendable {
+/// `ErrorDisplayModel` describes an error in a way that is suitable for presentation in the UI, rather than for debugging or logging.
+public struct ErrorDisplayModel: Error, Equatable, Sendable {
     /// A short, human-readable title describing the error.
     public let title: String
     
@@ -27,11 +27,15 @@ public struct ViewError: Error, Equatable, Sendable {
     }
 }
 
-public extension ViewError {
+public extension ErrorDisplayModel {
     static func generic(
         message: String = "Something went wrong",
         recoverySuggestion: String? = nil
-    ) -> ViewError {
-        ViewError(title: "Error", message: message, recoverySuggestion: recoverySuggestion)
+    ) -> ErrorDisplayModel {
+        ErrorDisplayModel(
+            title: "Error",
+            message: message,
+            recoverySuggestion: recoverySuggestion
+        )
     }
 }

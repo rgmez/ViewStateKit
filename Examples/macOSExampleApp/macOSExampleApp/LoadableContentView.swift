@@ -10,12 +10,12 @@ import ViewStateKit
 
 struct LoadableContentView: View {
     @State private var viewModel = LoadableContentViewModel()
+    @State private var selectedOutcome: LoadOutcome = .success
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
                 controls
-                    .frame(maxWidth: .infinity, alignment: .top)
 
                 Divider()
 
@@ -29,53 +29,41 @@ struct LoadableContentView: View {
     }
 
     private var controls: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Manual states")
+        HStack(spacing: 12) {
+            Text("Simulated load")
                 .font(.headline)
 
-            HStack(spacing: 8) {
-                Button("Idle") { viewModel.update(state: .idle) }
-                Button("Loading") { viewModel.update(state: .loading) }
-                Button("Content") { viewModel.update(state: .content(["Alpha", "Beta", "Gamma"])) }
-                Button("Empty") { viewModel.update(state: .empty(.noResults)) }
-                Button("Error") { viewModel.update(state: .error(ViewError.generic())) }
+            Picker("Outcome", selection: $selectedOutcome) {
+                ForEach(LoadOutcome.allCases) { outcome in
+                    Text(outcome.displayTitle).tag(outcome)
+                }
             }
+            .pickerStyle(.segmented)
+            .frame(maxWidth: 320)
 
-            Divider()
+            Spacer()
 
-            HStack(spacing: 12) {
-                Text("Simulated load")
-                    .font(.headline)
-
-                Picker("Outcome", selection: $viewModel.selectedOutcome) {
-                    ForEach(LoadOutcome.allCases) { outcome in
-                        Text(outcome.displayTitle).tag(outcome)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .frame(maxWidth: 320)
-
-                Spacer()
-
-                Button("Load") {
-                    Task { await viewModel.load() }
-                }
-                .keyboardShortcut(.return, modifiers: [])
-
-                Button("Reset") {
-                    viewModel.update(state: .idle)
-                }
-                .keyboardShortcut("r", modifiers: [.command])
+            Button("Load") {
+                Task { await viewModel.load(outcome: selectedOutcome) }
             }
+            .keyboardShortcut(.return, modifiers: [])
+
+            Button("Reset") {
+                viewModel.update(state: .idle)
+            }
+            .keyboardShortcut("r", modifiers: [.command])
         }
     }
 
     private var contentArea: some View {
-        StateDrivenView(state: viewModel.state) { items in
-            List(items, id: \.self) { item in
-                Text(item)
-            }
-        }
+        StateDrivenView(
+            state: viewModel.state,
+            content: { items in
+                List(items, id: \.self) { Text($0) }
+            },
+            empty: { emptyPlaceholder($0) },
+            error: { errorPlaceholder($0) }
+        )
         .background(.thinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }

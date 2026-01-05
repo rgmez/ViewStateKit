@@ -9,19 +9,19 @@
 import SwiftUI
 
 @ViewBuilder
-public func emptyPlaceholder(reason: EmptyReason?) -> some View {
+public func emptyPlaceholder(_ reason: EmptyDisplayModel) -> some View {
     ContentUnavailableView {
         Label(
-            PlaceholderContent.title(for: reason),
-            systemImage: PlaceholderContent.systemImage(for: reason)
+            reason.title,
+            systemImage: reason.systemImageName
         )
     } description: {
-        Text(PlaceholderContent.description(for: reason))
+        Text(reason.message)
     }
 }
 
 @ViewBuilder
-public func errorPlaceholder(_ error: ViewError) -> some View {
+public func errorPlaceholder(_ error: ErrorDisplayModel) -> some View {
     ContentUnavailableView {
         Label(
             error.title,
