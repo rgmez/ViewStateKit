@@ -74,13 +74,13 @@ public struct StateDrivenView<
 
 public extension StateDrivenView where ErrorState == ErrorDisplayModel, EmptyState == EmptyDisplayModel {
     init(
-        state: ViewState<Content, ErrorDisplayModel, EmptyDisplayModel?>,
+        state: ViewState<Content, ErrorDisplayModel, EmptyDisplayModel>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
-        @ViewBuilder empty: @escaping (EmptyDisplayModel) -> EmptyViewContent = { reason in
-            emptyPlaceholder(reason)
+        @ViewBuilder empty: @escaping (EmptyDisplayModel) -> EmptyViewContent = { model in
+            emptyPlaceholder(model)
         },
-        @ViewBuilder error: @escaping (ErrorDisplayModel) -> ErrorViewContent = { viewError in
-            errorPlaceholder(viewError)
+        @ViewBuilder error: @escaping (ErrorDisplayModel) -> ErrorViewContent = { model in
+            errorPlaceholder(model)
         },
         @ViewBuilder loading: @escaping () -> LoadingView = {
             ProgressView()
@@ -89,14 +89,12 @@ public extension StateDrivenView where ErrorState == ErrorDisplayModel, EmptySta
             SwiftUI.EmptyView()
         }
     ) {
-        self.init(
-            state: state,
-            content: content,
-            empty: empty,
-            error: error,
-            loading: loading,
-            idle: idle
-        )
+        self.state = state
+        self.content = content
+        self.empty = empty
+        self.error = error
+        self.loading = loading
+        self.idle = idle
     }
 }
 #endif
