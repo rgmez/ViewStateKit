@@ -35,7 +35,7 @@ public struct StateDrivenView<
             ProgressView()
         },
         @ViewBuilder idle: @escaping () -> IdleView = {
-            SwiftUI.EmptyView()
+            EmptyView()
         }
     ) {
         self.state = state
@@ -97,4 +97,66 @@ public extension StateDrivenView where Failure == ErrorDisplayModel, Empty == Em
         self.idle = idle
     }
 }
+
+// MARK: Failure == Never (can't fail): no `error:` required
+
+public extension StateDrivenView where Failure == Never, ErrorViewContent == EmptyView {
+    init(
+        state: ViewState<Content, Never, Empty>,
+        @ViewBuilder content: @escaping (Content) -> ContentView,
+        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent,
+        @ViewBuilder loading: @escaping () -> LoadingView = { ProgressView() },
+        @ViewBuilder idle: @escaping () -> IdleView = { EmptyView() }
+    ) {
+        self.init(
+            state: state,
+            content: content,
+            empty: empty,
+            error: { _ in EmptyView() },   // unreachable
+            loading: loading,
+            idle: idle
+        )
+    }
+}
+
+// MARK: Empty == Never (never empty): no `empty:` required
+
+public extension StateDrivenView where Empty == Never, EmptyViewContent == EmptyView {
+    init(
+        state: ViewState<Content, Failure, Never>,
+        @ViewBuilder content: @escaping (Content) -> ContentView,
+        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent,
+        @ViewBuilder loading: @escaping () -> LoadingView = { ProgressView() },
+        @ViewBuilder idle: @escaping () -> IdleView = { EmptyView() }
+    ) {
+        self.init(
+            state: state,
+            content: content,
+            empty: { _ in EmptyView() },   // unreachable
+            error: error,
+            loading: loading,
+            idle: idle
+        )
+    }
+}
+
+// MARK: - Failure == Never AND Empty == Never: only `content:`
+public extension StateDrivenView where Failure == Never, Empty == Never, EmptyViewContent == EmptyView, ErrorViewContent == EmptyView {
+    init(
+        state: ViewState<Content, Never, Never>,
+        @ViewBuilder content: @escaping (Content) -> ContentView,
+        @ViewBuilder loading: @escaping () -> LoadingView = { ProgressView() },
+        @ViewBuilder idle: @escaping () -> IdleView = { EmptyView() }
+    ) {
+        self.init(
+            state: state,
+            content: content,
+            empty: { _ in EmptyView() },   // unreachable
+            error: { _ in EmptyView() },   // unreachable
+            loading: loading,
+            idle: idle
+        )
+    }
+}
+
 #endif
