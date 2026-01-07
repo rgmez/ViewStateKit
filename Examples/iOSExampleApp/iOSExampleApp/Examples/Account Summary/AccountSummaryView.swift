@@ -22,7 +22,11 @@ struct AccountSummaryView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            controls
+            ExampleControls(
+                outcome: $selectedOutcome,
+                outcomeTitle: { $0.displayTitle },
+                action: viewModel.load(outcome:)
+            )
 
             Divider()
 
@@ -37,27 +41,6 @@ struct AccountSummaryView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .navigationTitle("Account Summary")
-    }
-
-    private var controls: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Simulated load")
-                .font(.headline)
-
-            HStack {
-                Picker("Outcome", selection: $selectedOutcome) {
-                    ForEach(AccountSummaryOutcome.allCases) { outcome in
-                        Text(outcome.displayTitle).tag(outcome)
-                    }
-                }
-                .pickerStyle(.segmented)
-
-                Button("Load") {
-                    Task { await viewModel.load(outcome: selectedOutcome) }
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
     }
 }
 
