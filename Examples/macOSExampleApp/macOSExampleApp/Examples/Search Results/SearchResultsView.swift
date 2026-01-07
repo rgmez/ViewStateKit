@@ -23,7 +23,7 @@ struct SearchResultsView: View {
     var body: some View {
         DetailView("Search Results") {
             VStack(spacing: 12) {
-                ExampleControls(
+                ControlsView(
                     outcome: $selectedOutcome,
                     outcomeTitle: { $0.displayTitle },
                     action: viewModel.load(outcome:)

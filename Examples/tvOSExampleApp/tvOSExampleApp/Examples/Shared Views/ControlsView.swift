@@ -1,6 +1,6 @@
 //
 //  ControlsView.swift
-//  macOSExampleApp
+//  tvOSExampleApp
 //
 //  Created by Roberto Gómez on 7/1/26.
 //
@@ -14,23 +14,28 @@ struct ControlsView<Outcome: CaseIterable & Hashable>: View {
     let action: (Outcome) async -> Void
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 18) {
             Text("Simulated load")
-                .font(.headline)
+                .font(.title2.weight(.semibold))
             
-            HStack {
-                Picker("Outcome", selection: $outcome) {
+            HStack(spacing: 18) {
+                Menu {
                     ForEach(Array(Outcome.allCases), id: \.self) { option in
-                        Text(outcomeTitle(option))
-                            .tag(option)
+                        Button(outcomeTitle(option)) {
+                            outcome = option
+                        }
                     }
+                } label: {
+                    Label(outcomeTitle(outcome), systemImage: "chevron.up.chevron.down")
                 }
-                .pickerStyle(.segmented)
+                .buttonStyle(.bordered)
+                .controlSize(.large)
                 
                 Button("Load") {
                     Task { await action(outcome) }
                 }
                 .buttonStyle(.borderedProminent)
+                .controlSize(.large)
             }
         }
     }

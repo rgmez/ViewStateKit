@@ -11,7 +11,7 @@ import SwiftUI
 struct tvOSExampleAppApp: App {
     var body: some Scene {
         WindowGroup {
-            LoadableContentView()
+            HomeView()
         }
     }
 }

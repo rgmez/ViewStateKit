@@ -28,6 +28,5 @@ struct HomeView: View {
             }
         }
         .frame(minWidth: 700, minHeight: 500)
-        .navigationTitle("")
     }
 }

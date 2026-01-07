@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExampleControls<Outcome: CaseIterable & Hashable>: View {
+struct ControlsView<Outcome: CaseIterable & Hashable>: View {
     @Binding var outcome: Outcome
     
     let outcomeTitle: (Outcome) -> String
