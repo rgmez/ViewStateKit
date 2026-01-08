@@ -11,7 +11,7 @@ import SwiftUI
 struct watchOSExampleApp_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            LoadableContentWatchView()
+            HomeView()
         }
     }
 }
