@@ -140,7 +140,8 @@ public extension StateDrivenView where Empty == Never, EmptyViewContent == Empty
     }
 }
 
-// MARK: - Failure == Never AND Empty == Never: only `content:`
+// MARK: Failure == Never AND Empty == Never: only `content:`
+
 public extension StateDrivenView where Failure == Never, Empty == Never, EmptyViewContent == EmptyView, ErrorViewContent == EmptyView {
     init(
         state: ViewState<Content, Never, Never>,
