@@ -8,20 +8,6 @@
 import SwiftUI
 import ViewStateKit
 
-struct AccountSummary: Equatable {
-    let planName: String
-    let usedStorage: String
-    let totalStorage: String
-}
-
-typealias AccountSummaryState = ViewStateWithoutEmpty<AccountSummary, ErrorDisplayModel>
-
-enum AccountSummaryOutcome: String, CaseIterable, Identifiable {
-    case success, failure
-    var id: String { rawValue }
-    var displayTitle: String { rawValue.capitalized }
-}
-
 struct AccountSummaryView: View {
     @State private var selectedOutcome: AccountSummaryOutcome = .success
     @State private var viewModel: AccountSummaryViewModel = .init()
@@ -31,7 +17,7 @@ struct AccountSummaryView: View {
             VStack(spacing: 36) {
                 ControlsView(
                     outcome: $selectedOutcome,
-                    outcomeTitle: { $0.displayTitle },
+                    outcomeTitle: \.id.capitalized,
                     action: viewModel.load(outcome:)
                 )
 

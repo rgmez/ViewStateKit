@@ -21,7 +21,7 @@ struct SearchResultsView: View {
             selectedOutcome: $selectedOutcome,
             showResult: $showResult,
             outcomes: SearchResultsOutcome.allCases,
-            outcomeTitle: \.id,
+            outcomeTitle: \.id.capitalized,
             load: viewModel.load(outcome:),
             reset: {
                 viewModel.reset()

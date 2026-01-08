@@ -8,6 +8,8 @@
 import Foundation
 import ViewStateKit
 
+typealias SearchResultsState = ViewState<[String], ErrorDisplayModel, EmptyDisplayModel>
+
 @MainActor
 @Observable
 final class SearchResultsViewModel {
@@ -42,5 +44,10 @@ final class SearchResultsViewModel {
             )
         }
     }
+}
+
+enum SearchResultsOutcome: String, CaseIterable, Identifiable {
+    case success, empty, failure
+    var id: String { rawValue }
 }
 

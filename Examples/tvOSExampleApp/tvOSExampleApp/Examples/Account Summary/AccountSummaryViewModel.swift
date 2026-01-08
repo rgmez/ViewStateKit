@@ -8,6 +8,8 @@
 import Foundation
 import ViewStateKit
 
+typealias AccountSummaryState = ViewStateWithoutEmpty<AccountSummary, ErrorDisplayModel>
+
 @MainActor
 @Observable
 final class AccountSummaryViewModel {
@@ -33,4 +35,15 @@ final class AccountSummaryViewModel {
             ))
         }
     }
+}
+
+struct AccountSummary: Equatable {
+    let planName: String
+    let usedStorage: String
+    let totalStorage: String
+}
+
+enum AccountSummaryOutcome: String, CaseIterable, Identifiable {
+    case success, failure
+    var id: String { rawValue }
 }

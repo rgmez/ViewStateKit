@@ -21,7 +21,7 @@ struct AccountSummaryView: View {
             selectedOutcome: $selectedOutcome,
             showResult: $showResult,
             outcomes: AccountSummaryOutcome.allCases,
-            outcomeTitle: \.id,
+            outcomeTitle: \.id.capitalized,
             load: viewModel.load(outcome:),
             reset: {
                 viewModel.reset()

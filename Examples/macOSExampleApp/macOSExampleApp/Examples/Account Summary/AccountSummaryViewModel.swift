@@ -8,6 +8,8 @@
 import Foundation
 import ViewStateKit
 
+typealias AccountSummaryState = ViewStateWithoutEmpty<[String], ErrorDisplayModel>
+
 @MainActor
 @Observable
 final class AccountSummaryViewModel {
@@ -39,4 +41,9 @@ final class AccountSummaryViewModel {
     func updateState(_ newState: AccountSummaryState) {
         state = newState
     }
+}
+
+enum AccountSummaryOutcome: String, CaseIterable, Identifiable {
+    case success, failure
+    var id: String { rawValue }
 }

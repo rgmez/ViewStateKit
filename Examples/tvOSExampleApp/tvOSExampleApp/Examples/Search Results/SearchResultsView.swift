@@ -8,14 +8,6 @@
 import SwiftUI
 import ViewStateKit
 
-typealias SearchResultsState = ViewState<[String], ErrorDisplayModel, EmptyDisplayModel>
-
-enum SearchResultsOutcome: String, CaseIterable, Identifiable {
-    case success, empty, failure
-    var id: String { rawValue }
-    var displayTitle: String { rawValue.capitalized }
-}
-
 struct SearchResultsView: View {
     @State private var viewModel = SearchResultsViewModel()
     @State private var selectedOutcome: SearchResultsOutcome = .success
@@ -25,7 +17,7 @@ struct SearchResultsView: View {
             VStack(spacing: 36) {
                 ControlsView(
                     outcome: $selectedOutcome,
-                    outcomeTitle: { $0.displayTitle },
+                    outcomeTitle: \.id.capitalized,
                     action: viewModel.load(outcome:)
                 )
 

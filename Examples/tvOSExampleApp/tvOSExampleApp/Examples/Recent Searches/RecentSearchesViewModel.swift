@@ -8,6 +8,8 @@
 import Foundation
 import ViewStateKit
 
+typealias RecentSearchesState = ViewStateWithoutError<[String], EmptyDisplayModel>
+
 @MainActor
 @Observable
 final class RecentSearchesViewModel {
@@ -22,17 +24,22 @@ final class RecentSearchesViewModel {
         "SPM binary target cache",
         "Observation vs combine"
     ]
-
+    
     func load(outcome: RecentSearchesOutcome = .success) async {
         state = .loading
         try? await Task.sleep(nanoseconds: 650_000_000)
-
+        
         state = switch outcome {
         case .success:
-            .content(recentSearchQueries)
+                .content(recentSearchQueries)
         case .empty:
-            .empty(.noResults)
+                .empty(.noResults)
         }
     }
+}
+
+enum RecentSearchesOutcome: String, CaseIterable, Identifiable {
+    case success, empty
+    var id: String { rawValue }
 }
 

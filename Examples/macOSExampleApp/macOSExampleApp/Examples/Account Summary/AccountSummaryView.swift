@@ -8,14 +8,6 @@
 import SwiftUI
 import ViewStateKit
 
-typealias AccountSummaryState = ViewStateWithoutEmpty<[String], ErrorDisplayModel>
-
-enum AccountSummaryOutcome: String, CaseIterable, Identifiable {
-    case success, failure
-    var id: String { rawValue }
-    var displayTitle: String { rawValue.capitalized }
-}
-
 struct AccountSummaryView: View {
     @State private var selectedOutcome: AccountSummaryOutcome = .success
     @State private var viewModel: AccountSummaryViewModel = .init()
@@ -25,7 +17,7 @@ struct AccountSummaryView: View {
             VStack(spacing: 12) {
                 ControlsView(
                     outcome: $selectedOutcome,
-                    outcomeTitle: { $0.displayTitle },
+                    outcomeTitle: \.id.capitalized,
                     action: viewModel.load(outcome:)
                 )
                 

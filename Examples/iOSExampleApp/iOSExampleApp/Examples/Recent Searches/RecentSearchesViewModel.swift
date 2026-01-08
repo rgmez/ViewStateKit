@@ -8,6 +8,8 @@
 import Foundation
 import ViewStateKit
 
+typealias RecentSearchesState = ViewStateWithoutError<[String], EmptyDisplayModel>
+
 @MainActor
 @Observable
 final class RecentSearchesViewModel {
@@ -37,4 +39,9 @@ final class RecentSearchesViewModel {
     func updateState(_ newState: RecentSearchesState) {
         state = newState
     }
+}
+
+enum RecentSearchesOutcome: String, CaseIterable, Identifiable {
+    case success, empty
+    var id: String { rawValue }
 }
