@@ -27,8 +27,20 @@ struct SearchResultsView: View {
                 viewModel.reset()
                 selectedOutcome = .success
                 showResult = false
-            },
-            state: { viewModel.state }
+            }
         )
+        .navigationDestination(isPresented: $showResult) {
+            StateDrivenView(
+                state: viewModel.state) { items in
+                    List {
+                        Section("Result") {
+                            ForEach(items, id: \.self) { item in
+                                Text(item)
+                                    .lineLimit(2)
+                            }
+                        }
+                    }
+                }
+        }
     }
 }

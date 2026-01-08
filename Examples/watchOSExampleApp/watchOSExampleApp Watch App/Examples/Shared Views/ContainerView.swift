@@ -8,7 +8,7 @@
 import SwiftUI
 import ViewStateKit
 
-struct ContainerView<Outcome: CaseIterable & Identifiable & Hashable, Failure, Empty>: View {
+struct ContainerView<Outcome: CaseIterable & Identifiable & Hashable>: View {
     let title: String
 
     @Binding var selectedOutcome: Outcome
@@ -19,8 +19,6 @@ struct ContainerView<Outcome: CaseIterable & Identifiable & Hashable, Failure, E
 
     let load: (Outcome) async -> Void
     let reset: () -> Void
-
-    let state: () -> ViewState<[String], Failure, Empty>
 
     var body: some View {
         List {
@@ -42,12 +40,6 @@ struct ContainerView<Outcome: CaseIterable & Identifiable & Hashable, Failure, E
             }
         }
         .navigationTitle(title)
-        .navigationDestination(isPresented: $showResult) {
-            LoadResultView(
-                title: title,
-                state: state
-            )
-        }
     }
 }
 

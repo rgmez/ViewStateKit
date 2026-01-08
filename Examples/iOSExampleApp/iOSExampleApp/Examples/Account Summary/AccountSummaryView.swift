@@ -26,8 +26,7 @@ struct AccountSummaryView: View {
                 state: viewModel.state,
                 content: { items in
                     List(items, id: \.self) { Text($0) }
-                },
-                error: { errorPlaceholder($0) }
+                }
             )
         }
         .padding()

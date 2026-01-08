@@ -29,8 +29,8 @@ public struct StateDrivenView<
     public init(
         state: ViewState<Content, Failure, Empty>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
-        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent,
-        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent,
+        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent = { emptyPlaceholder($0) },
+        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent = { errorPlaceholder($0) },
         @ViewBuilder loading: @escaping () -> LoadingView = {
             ProgressView()
         },
@@ -104,7 +104,7 @@ public extension StateDrivenView where Failure == Never, ErrorViewContent == Emp
     init(
         state: ViewState<Content, Never, Empty>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
-        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent,
+        @ViewBuilder empty: @escaping (Empty) -> EmptyViewContent = { emptyPlaceholder($0)},
         @ViewBuilder loading: @escaping () -> LoadingView = { ProgressView() },
         @ViewBuilder idle: @escaping () -> IdleView = { EmptyView() }
     ) {
@@ -125,7 +125,7 @@ public extension StateDrivenView where Empty == Never, EmptyViewContent == Empty
     init(
         state: ViewState<Content, Failure, Never>,
         @ViewBuilder content: @escaping (Content) -> ContentView,
-        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent,
+        @ViewBuilder error: @escaping (Failure) -> ErrorViewContent = { errorPlaceholder($0) },
         @ViewBuilder loading: @escaping () -> LoadingView = { ProgressView() },
         @ViewBuilder idle: @escaping () -> IdleView = { EmptyView() }
     ) {

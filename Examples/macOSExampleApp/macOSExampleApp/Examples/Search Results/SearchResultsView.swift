@@ -43,9 +43,7 @@ struct SearchResultsView: View {
                             }
                         }
                         .listStyle(.inset)
-                    },
-                    empty: { emptyPlaceholder($0) },
-                    error: { errorPlaceholder($0) }
+                    }
                 )
             }
         }

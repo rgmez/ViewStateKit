@@ -26,9 +26,7 @@ struct SearchResultsView: View {
                 state: viewModel.state,
                 content: { items in
                     List(items, id: \.self) { Text($0) }
-                },
-                empty: { emptyPlaceholder($0) },
-                error: { errorPlaceholder($0) }
+                }
             )
         }
         .padding()
