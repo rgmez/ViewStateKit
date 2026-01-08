@@ -68,7 +68,7 @@ and let the view react to it.
 ```swift
 .package(
   url: "https://github.com/rgmez/ViewStateKit",
-  from: "0.1.0"
+  from: "0.2.0"
 )
 ```
 
