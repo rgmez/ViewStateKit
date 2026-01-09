@@ -21,7 +21,7 @@ public enum EmptyDisplayModel: Equatable, Sendable {
     case noConnection
     
     /// A custom, user-defined reason. Use this when none of the predefined cases match your scenario.
-    case custom(String)
+    case custom(String, String)
 }
  
 extension EmptyDisplayModel {
@@ -30,7 +30,7 @@ extension EmptyDisplayModel {
         case .noResults: L10n.Empty.NoResults.title
         case .noDataYet: L10n.Empty.NoDataYet.title
         case .noConnection: L10n.Empty.NoConnection.title
-        case let .custom(text): text
+        case let .custom(title, _): title
         }
     }
 
@@ -39,7 +39,7 @@ extension EmptyDisplayModel {
         case .noResults: L10n.Empty.NoResults.message
         case .noDataYet: L10n.Empty.NoDataYet.message
         case .noConnection: L10n.Empty.NoConnection.message
-        case .custom: L10n.Empty.Custom.message
+        case .custom(_, let message): message
         }
     }
 

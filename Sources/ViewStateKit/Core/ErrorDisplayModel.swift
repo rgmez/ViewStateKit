@@ -38,7 +38,7 @@ public extension ErrorDisplayModel {
         ErrorDisplayModel(
             title: L10n.Error.Generic.title,
             message: message ?? L10n.Error.Generic.message,
-            recoverySuggestion: recoverySuggestion
+            recoverySuggestion: recoverySuggestion ?? L10n.Error.Generic.recovery
         )
     }
 }

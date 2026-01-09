@@ -3,12 +3,6 @@ import Foundation
 
 public enum L10n {
     public enum Empty {
-        public enum Custom {
-            public static var message: String { localized("Empty.Custom.Message") }
-            public static var title: String { localized("Empty.Custom.Title") }
-        }
-
-        // access nested values via L10n.Empty.Custom\n
         public enum NoConnection {
             public static var message: String { localized("Empty.NoConnection.Message") }
             public static var title: String { localized("Empty.NoConnection.Title") }

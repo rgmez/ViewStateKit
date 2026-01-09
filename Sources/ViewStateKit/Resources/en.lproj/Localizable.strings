@@ -1,17 +1,12 @@
-/* EmptyDisplayModel titles and messages */
 "Empty.NoResults.Title" = "No results";
-"Empty.NoResults.Message" = "Try adjusting your search or filters.";
+"Empty.NoResults.Message" = "Try adjusting your search or filters";
 
 "Empty.NoDataYet.Title" = "No data yet";
-"Empty.NoDataYet.Message" = "Once you add something, it will appear here.";
+"Empty.NoDataYet.Message" = "Once you add something, it will appear here";
 
 "Empty.NoConnection.Title" = "No connection";
-"Empty.NoConnection.Message" = "Check your internet connection and try again.";
+"Empty.NoConnection.Message" = "Check your internet connection and try again";
 
-"Empty.Custom.Title" = "";
-"Empty.Custom.Message" = "There's no content to show.";
-
-/* ErrorDisplayModel */
 "Error.Generic.Title" = "Error";
 "Error.Generic.Message" = "Something went wrong";
-"Error.Generic.Recovery" = "Please try again.";
+"Error.Generic.Recovery" = "Please try again";

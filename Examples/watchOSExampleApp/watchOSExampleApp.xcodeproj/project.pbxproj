@@ -40,9 +40,22 @@
 		72ADCA852F0560D1007113F7 /* watchOSExampleApp Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "watchOSExampleApp Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		72FBDC582F1167A700C64D84 /* Exceptions for "watchOSExampleApp Watch App" folder in "watchOSExampleApp Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"watchOSExampleApp-Watch-App-Info.plist",
+			);
+			target = 72ADCA842F0560D1007113F7 /* watchOSExampleApp Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		72ADCA892F0560D1007113F7 /* watchOSExampleApp Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				72FBDC582F1167A700C64D84 /* Exceptions for "watchOSExampleApp Watch App" folder in "watchOSExampleApp Watch App" target */,
+			);
 			path = "watchOSExampleApp Watch App";
 			sourceTree = "<group>";
 		};
@@ -322,6 +335,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "watchOSExampleApp-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = watchOSExampleApp;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
@@ -354,6 +368,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "watchOSExampleApp-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = watchOSExampleApp;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;

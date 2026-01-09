@@ -68,7 +68,12 @@ public func errorPlaceholder(_ error: ErrorDisplayModel) -> some View {
             systemImage: "exclamationmark.triangle"
         )
     } description: {
-        Text(error.message)
+        VStack(spacing: 10) {
+            Text(error.message)
+            if let recoverySuggestion = error.recoverySuggestion {
+                Text(recoverySuggestion)
+            }
+        }.padding(5)
     }
 }
 
