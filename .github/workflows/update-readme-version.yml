@@ -20,11 +20,16 @@ jobs:
           TAG=${GITHUB_REF#refs/tags/}
           echo "TAG=$TAG" >> $GITHUB_ENV
 
-      - name: Update README `from:`
+      - name: Update README `from:` (Swift code block only)
         run: |
-          echo "Updating README.md to use from: \"${TAG}\""
-          # Replace the first occurrence of from: "x.y.z" with the release tag
-          perl -0777 -pe "s/from: \"[^"]+\"/from: \"${TAG}\"/s" -i README.md
+          echo "Updating README.md to use from: \"${TAG}\" inside the first Swift code block"
+          # Replace the `from:` value only inside the first ```swift code block that contains `.package(`
+          awk -v tag="$TAG" '
+          BEGIN { in=0; done=0 }
+          /^```swift/ && done==0 { in=1; print; next }
+          /^```/ && in==1 { in=0; done=1; print; next }
+          { if(in==1 && match($0, /from: "[^"]+"/)) { sub(/from: "[^"]+"/, "from: \"" tag "\""); print } else print }
+          ' README.md > README.md.tmp && mv README.md.tmp README.md
           git --no-pager diff -- README.md || true
 
       - name: Commit and push
