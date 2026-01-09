@@ -15,3 +15,13 @@
 - Default placeholders for loading/empty/error
 - Examples: iOS, macOS, tvOS, watchOS
 - Minimum platforms: iOS 17, macOS 14, tvOS 17, watchOS 10
+
+## 0.3.0 - 2026-01-09
+- Add package-localized resources and Spanish translations
+- Add `L10n` type-safe generated localization API and generator (`Tools/generate_localized_strings.swift`)
+- Add SwiftPM build-tool plugin and Makefile target to generate localizations during CI and builds
+- Use `Bundle.module` for explicit package resource lookup; updated localization helper
+- Replace hard-coded strings in `EmptyDisplayModel` and `ErrorDisplayModel` with localized accessors
+- Update example app Info.plist with `CFBundleLocalizations` to enable package resource selection
+- Remove temporary runtime debug prints and add tests for localization
+- Ignore local `build/` artifacts in `.gitignore`
