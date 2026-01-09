@@ -13,17 +13,14 @@ concurrency:
   
 jobs:
   swift-test:
-    # Use macos-14 for guaranteed Xcode 15+ availability
-    runs-on: macos-14 
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.0.app/Contents/Developer
+      
+    runs-on: macos-15
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Select Xcode Version (e.g., 16.0 which has Swift 6.2)
-        uses: developercommunity/setup-xcode@v1
-        with:
-          xcode-version: '16.0' 
         
       - name: Toolchain info
         run: |
