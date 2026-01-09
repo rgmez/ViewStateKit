@@ -20,10 +20,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Swift 6.2
-        uses: finestructure/setup-swift@v2
-        with:
-          swift-version: '6.2'
+      - name: Install Swift 6.2 toolchain (macOS)
+        run: |
+          set -euo pipefail
+          echo "Looking up Swift 6.2 macOS package on swift.org..."
+          # Try to find a macOS installer pkg for Swift 6.2 on swift.org
+          PKG_URL=$(curl -sSfL https://swift.org/download/ | grep -Eo 'https://swift.org/builds/swift-6\.2-release[^\"]+pkg' | grep -i 'osx\|macos' | head -n1 || true)
+          if [ -z "$PKG_URL" ]; then
+            echo "Swift 6.2 package URL not found on swift.org; failing job."
+            exit 1
+          fi
+          echo "Found package: $PKG_URL"
+          curl -L "$PKG_URL" -o swift.pkg
+          sudo installer -pkg swift.pkg -target /
+          rm -f swift.pkg
+          echo "Installed Swift toolchain:" && swift --version
 
       - name: Generate localized strings
         run: make generate-localizations
