@@ -27,7 +27,23 @@ jobs:
         run: |
           set -euo pipefail
           echo "Downloading Swift package from: $SWIFT_PKG_URL"
-          curl -L "$SWIFT_PKG_URL" -o swift.pkg
+          HTTP_STATUS=$(curl -sSL -w "%{http_code}" -o swift.pkg "$SWIFT_PKG_URL") || true
+          echo "HTTP status: $HTTP_STATUS"
+          if [ ! -f swift.pkg ]; then
+            echo "Download failed: swift.pkg not present"
+            exit 1
+          fi
+          FILE_SIZE=$(stat -f%z swift.pkg)
+          echo "Downloaded swift.pkg size: $FILE_SIZE bytes"
+          echo "File type:" && file swift.pkg || true
+          if [ "$FILE_SIZE" -lt 1000000 ]; then
+            echo "Downloaded package appears too small to be a valid Swift pkg; dumping head of file for diagnostics:"
+            xxd -l 512 swift.pkg || true
+            echo "Showing first 200 bytes as text:" || true
+            head -c 200 swift.pkg || true
+            echo "Failing because downloaded package is invalid."
+            exit 1
+          fi
           echo "Installing Swift toolchain..."
           sudo installer -pkg swift.pkg -target /
           rm -f swift.pkg
