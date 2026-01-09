@@ -1,0 +1,42 @@
+name: Swift
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  swift-test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Toolchain info
+        run: |
+          xcodebuild -version
+          swift --version
+          
+      - name: Cache SwiftPM
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.swiftpm
+            .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved', '**/Package.swift') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+            
+      - name: Build
+        run: swift build -v
+        
+      - name: Test (with coverage)
+        run: swift test --enable-code-coverage -v
+      
