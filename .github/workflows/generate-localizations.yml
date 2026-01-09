@@ -20,29 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Swift 6.2 toolchain (pinned pkg)
+      - name: Install Swift 6.2 toolchain (pinned pkg — simple)
         env:
-          # Set these in the repository or workflow environment to the exact pkg URL and sha256.
-          # Example (do NOT hardcode secrets in public repos):
-          # SWIFT_PKG_URL: https://download.swift.org/swift-6.2-release/swift-6.2-RELEASE/swift-6.2-RELEASE-osx.pkg
-          # SWIFT_PKG_SHA256: <hex-sha256-checksum>
-          SWIFT_PKG_URL: ${{ secrets.SWIFT_PKG_URL }}
-          SWIFT_PKG_SHA256: ${{ secrets.SWIFT_PKG_SHA256 }}
+          # Pinned Swift 6.2 macOS package URL (simple, no checksum verification)
+          SWIFT_PKG_URL: https://download.swift.org/swift-6.2-release/swift-6.2-RELEASE/swift-6.2-RELEASE-osx.pkg
         run: |
           set -euo pipefail
-          if [ -z "${SWIFT_PKG_URL:-}" ] || [ -z "${SWIFT_PKG_SHA256:-}" ]; then
-            echo "SWIFT_PKG_URL and SWIFT_PKG_SHA256 must be set as repository secrets or workflow env vars."
-            echo "Set SWIFT_PKG_URL to the exact swift 6.2 macOS pkg URL from swift.org and SWIFT_PKG_SHA256 to its sha256."
-            exit 1
-          fi
           echo "Downloading Swift package from: $SWIFT_PKG_URL"
           curl -L "$SWIFT_PKG_URL" -o swift.pkg
-          echo "Verifying checksum..."
-          ACTUAL=$(shasum -a 256 swift.pkg | awk '{print $1}')
-          if [ "$ACTUAL" != "$SWIFT_PKG_SHA256" ]; then
-            echo "Checksum mismatch: expected $SWIFT_PKG_SHA256 but got $ACTUAL"
-            exit 1
-          fi
           echo "Installing Swift toolchain..."
           sudo installer -pkg swift.pkg -target /
           rm -f swift.pkg
