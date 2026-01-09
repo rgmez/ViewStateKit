@@ -269,3 +269,42 @@ This helps you see how `ViewState` and `StateDrivenView` scale as you "remove" i
 ## License
 
 MIT License. See `LICENSE`.
+
+---
+
+## Localization — Adding a new language
+
+To add translations for a new language, follow these steps:
+
+- **Create the language resource folder:** add a new `.lproj` directory under `Sources/ViewStateKit/Resources`, for example `fr.lproj` for French.
+
+  - Path example: [Sources/ViewStateKit/Resources/en.lproj/Localizable.strings](Sources/ViewStateKit/Resources/en.lproj/Localizable.strings) is the English reference.
+
+- **Add a `Localizable.strings` file:** copy the keys from the English file and provide translated values.
+
+- **Regenerate the type-safe accessors:** you can regenerate the `L10n` accessors in two ways:
+
+  - Locally via Makefile (recommended for editing and committing generated API):
+
+    ```sh
+    make generate-localizations
+    ```
+
+  - Or let SwiftPM run the generation during build (the package includes a build tool plugin):
+
+    ```sh
+    swift build
+    ```
+
+  The Makefile runs the generator script at `Tools/generate_localized_strings.swift`. The build-time plugin also invokes the same script so CI and local builds will generate the accessors automatically.
+
+- **Run tests / verify:**
+
+  ```sh
+  swift test
+  ```
+
+Notes:
+
+- The package processes resources declared in the manifest; `defaultLocalization` is set to English (`en`). You do not need to change the manifest to add additional languages — simply add the new `.lproj/Localizable.strings` file.
+- If you prefer committing generated sources, run `make generate-localizations` and commit the produced `Sources/ViewStateKit/Generated/Strings+Localized.swift` file. Otherwise, rely on the SwiftPM plugin which generates the file during `swift build`.

@@ -1,0 +1,27 @@
+name: Generate Localizations
+
+on:
+  push:
+    paths:
+      - '**/Resources/**'
+      - 'Tools/**'
+      - 'Makefile'
+  pull_request:
+    paths:
+      - '**/Resources/**'
+      - 'Tools/**'
+      - 'Makefile'
+
+jobs:
+  generate:
+    name: Generate and Test
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate localized strings
+        run: make generate-localizations
+
+      - name: Run tests
+        run: swift test

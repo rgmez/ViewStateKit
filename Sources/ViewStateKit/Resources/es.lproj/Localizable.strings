@@ -1,0 +1,17 @@
+/* EmptyDisplayModel titles and messages (Spanish) */
+"Empty.NoResults.Title" = "Sin resultados";
+"Empty.NoResults.Message" = "Intenta ajustar tu búsqueda o los filtros.";
+
+"Empty.NoDataYet.Title" = "Aún no hay datos";
+"Empty.NoDataYet.Message" = "Una vez que añadas algo, aparecerá aquí.";
+
+"Empty.NoConnection.Title" = "Sin conexión";
+"Empty.NoConnection.Message" = "Comprueba tu conexión a Internet e inténtalo de nuevo.";
+
+"Empty.Custom.Title" = "";
+"Empty.Custom.Message" = "No hay contenido para mostrar.";
+
+/* ErrorDisplayModel (Spanish) */
+"Error.Generic.Title" = "Error";
+"Error.Generic.Message" = "Algo salió mal";
+"Error.Generic.Recovery" = "Por favor, inténtalo de nuevo.";

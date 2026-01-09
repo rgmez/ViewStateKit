@@ -27,19 +27,19 @@ public enum EmptyDisplayModel: Equatable, Sendable {
 extension EmptyDisplayModel {
     var title: String {
         switch self {
-        case .noResults: "No results"
-        case .noDataYet: "No data yet"
-        case .noConnection: "No connection"
+        case .noResults: L10n.Empty.NoResults.title
+        case .noDataYet: L10n.Empty.NoDataYet.title
+        case .noConnection: L10n.Empty.NoConnection.title
         case let .custom(text): text
         }
     }
 
     var message: String {
         switch self {
-        case .noResults: "Try adjusting your search or filters."
-        case .noDataYet: "Once you add something, it will appear here."
-        case .noConnection: "Check your internet connection and try again."
-        case .custom: "There's no content to show."
+        case .noResults: L10n.Empty.NoResults.message
+        case .noDataYet: L10n.Empty.NoDataYet.message
+        case .noConnection: L10n.Empty.NoConnection.message
+        case .custom: L10n.Empty.Custom.message
         }
     }
 

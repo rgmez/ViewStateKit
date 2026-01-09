@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ViewStateKit",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
         .macOS(.v14),
@@ -17,7 +18,19 @@ let package = Package(
     targets: [
         .target(
             name: "ViewStateKit",
-            path: "Sources/ViewStateKit"
+            path: "Sources/ViewStateKit",
+            resources: [
+                .process("Resources")
+            ]
+            ,
+            plugins: [
+                .plugin(name: "GenerateLocalizationsPlugin")
+            ]
+        ),
+        .plugin(
+            name: "GenerateLocalizationsPlugin",
+            capability: .buildTool(),
+            path: "Plugins/GenerateLocalizationsPlugin"
         ),
         .testTarget(
             name: "ViewStateKitTests",
