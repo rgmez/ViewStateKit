@@ -28,14 +28,8 @@ final class AccountSummaryViewModel {
         try? await Task.sleep(nanoseconds: 700_000_000)
 
         state = switch outcome {
-        case .success:
-            .content(accountSummaryLines)
-        case .failure:
-            .error(.init(
-                title: "Something went wrong",
-                message: "We couldn't refresh your account data.",
-                recoverySuggestion: "Please try again."
-            ))
+        case .success: .content(accountSummaryLines)
+        case .failure: .error(.generic())
         }
     }
 

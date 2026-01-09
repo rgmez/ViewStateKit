@@ -28,11 +28,17 @@ public struct ErrorDisplayModel: Error, Equatable, Sendable {
 }
 
 public extension ErrorDisplayModel {
-    static var generic: ErrorDisplayModel {
+    /// Convenience factory for a generic user-facing error.
+    ///
+    /// - Parameters:
+    ///   - message: optional override for the default localized message
+    ///   - recoverySuggestion: optional override for the default recovery suggestion
+    /// - Returns: an `ErrorDisplayModel` populated with localized defaults unless overridden
+    static func generic(message: String? = nil, recoverySuggestion: String? = nil) -> ErrorDisplayModel {
         ErrorDisplayModel(
             title: L10n.Error.Generic.title,
-            message: L10n.Error.Generic.message,
-            recoverySuggestion: L10n.Error.Generic.recovery
+            message: message ?? L10n.Error.Generic.message,
+            recoverySuggestion: recoverySuggestion
         )
     }
 }

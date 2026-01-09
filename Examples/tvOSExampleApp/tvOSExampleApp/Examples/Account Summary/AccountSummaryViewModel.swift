@@ -26,7 +26,7 @@ final class AccountSummaryViewModel {
 
         state = switch outcome {
         case .success: .content(accountSummary)
-        case .failure: .error(.generic)
+        case .failure: .error(.generic())
         }
     }
 }
