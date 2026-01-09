@@ -25,14 +25,8 @@ final class AccountSummaryViewModel {
         try? await Task.sleep(nanoseconds: 700_000_000)
 
         state = switch outcome {
-        case .success:
-            .content(accountSummary)
-        case .failure:
-            .error(.init(
-                title: "Account unavailable",
-                message: "We couldn't load your account details.",
-                recoverySuggestion: "Please try again."
-            ))
+        case .success: .content(accountSummary)
+        case .failure: .error(.generic)
         }
     }
 }

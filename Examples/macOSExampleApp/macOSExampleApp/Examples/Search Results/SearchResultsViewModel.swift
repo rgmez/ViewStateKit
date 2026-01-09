@@ -32,13 +32,7 @@ final class SearchResultsViewModel {
         state = switch outcome {
         case .success: .content(searchResultItems)
         case .empty: .empty(.noResults)
-        case .failure: .error(
-            .init(
-                title: "Something went wrong",
-                message: "We couldn't load the data right now.",
-                recoverySuggestion: "Please try again."
-            )
-        )
+        case .failure: .error(.generic)
         }
     }
 

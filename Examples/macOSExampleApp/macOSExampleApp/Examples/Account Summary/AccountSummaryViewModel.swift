@@ -28,13 +28,7 @@ final class AccountSummaryViewModel {
 
         state = switch outcome {
         case .success: .content(accountSummaryLines)
-        case .failure: .error(
-            .init(
-                title: "Something went wrong",
-                message: "We couldn't load the data right now.",
-                recoverySuggestion: "Please try again."
-            )
-        )
+        case .failure: .error(.generic)
         }
     }
 

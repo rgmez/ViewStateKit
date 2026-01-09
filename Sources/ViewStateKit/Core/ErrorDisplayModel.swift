@@ -28,14 +28,11 @@ public struct ErrorDisplayModel: Error, Equatable, Sendable {
 }
 
 public extension ErrorDisplayModel {
-    static func generic(
-        message: String = "Something went wrong",
-        recoverySuggestion: String? = nil
-    ) -> ErrorDisplayModel {
+    static var generic: ErrorDisplayModel {
         ErrorDisplayModel(
-            title: "Error",
-            message: message,
-            recoverySuggestion: recoverySuggestion
+            title: L10n.Error.Generic.title,
+            message: L10n.Error.Generic.message,
+            recoverySuggestion: L10n.Error.Generic.recovery
         )
     }
 }

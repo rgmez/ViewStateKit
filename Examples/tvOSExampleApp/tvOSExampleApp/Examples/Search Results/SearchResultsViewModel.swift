@@ -30,18 +30,9 @@ final class SearchResultsViewModel {
         try? await Task.sleep(nanoseconds: 800_000_000)
 
         state = switch outcome {
-        case .success:
-            .content(searchResultItems)
-        case .empty:
-            .empty(.noResults)
-        case .failure:
-            .error(
-                .init(
-                    title: "Something went wrong",
-                    message: "We couldn't load the results right now.",
-                    recoverySuggestion: "Please try again."
-                )
-            )
+        case .success: .content(searchResultItems)
+        case .empty: .empty(.noResults)
+        case .failure: .error(.generic)
         }
     }
 }
