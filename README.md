@@ -4,6 +4,8 @@
   <img src="README/Images/ViewStateKit.png" alt="ViewStateKit" width="100%" />
 </p>
 
+![CI](https://github.com/rgmez/ViewStateKit/actions/workflows/swift.yml/badge.svg)
+
 A small, cross-platform Swift package to model **screen state** and render it in SwiftUI using a single source of truth.
 
 ViewStateKit replaces multiple UI flags (`isLoading`, `hasError`, `isEmpty`) with one expressive enum that scales from simple screens to complex flows.
