@@ -266,13 +266,7 @@ This helps you see how `ViewState` and `StateDrivenView` scale as you "remove" i
 
 ---
 
-## License
-
-MIT License. See `LICENSE`.
-
----
-
-## Localization — Adding a new language
+## Localization: Adding a new language
 
 To add translations for a new language, follow these steps:
 
@@ -308,3 +302,9 @@ Notes:
 
 - The package processes resources declared in the manifest; `defaultLocalization` is set to English (`en`). You do not need to change the manifest to add additional languages — simply add the new `.lproj/Localizable.strings` file.
 - If you prefer committing generated sources, run `make generate-localizations` and commit the produced `Sources/ViewStateKit/Generated/Strings+Localized.swift` file. Otherwise, rely on the SwiftPM plugin which generates the file during `swift build`.
+
+---
+
+## License
+
+MIT License. See `LICENSE`.
