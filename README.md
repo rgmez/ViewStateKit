@@ -65,6 +65,8 @@ and let the view react to it.
 
 `File → Add Package Dependencies…` and paste the repository URL.
 
+[![Release](https://img.shields.io/github/v/release/rgmez/ViewStateKit?include_prereleases)](https://github.com/rgmez/ViewStateKit/releases)
+
 ### Swift Package Manager (`Package.swift`)
 
 ```swift
