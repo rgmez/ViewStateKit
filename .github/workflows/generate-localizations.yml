@@ -20,6 +20,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Swift 6.2
+        uses: finestructure/setup-swift@v2
+        with:
+          swift-version: '6.2'
+
       - name: Generate localized strings
         run: make generate-localizations
 
